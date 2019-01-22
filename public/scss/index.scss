@@ -1,0 +1,41 @@
+@import './mixins.scss';
+@import './variables.scss';
+@import './forms.scss';
+@import './layout.scss';
+@import './typography.scss';
+
+
+* {
+    font-family: 'Source Sans Pro', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    //The default browser font-size is 16px
+    //We want every relative unit (rem) to correspond to 10px
+    //==> Set the font-size to 62.5% of the default of 16, ===> 10px
+
+    font-size: 62.5%;
+    
+    @include respond(huge) {
+        font-size: 95%; // 14.4px
+    }
+
+    @include respond(desktop) {
+        font-size: 90%; // 12.8px
+    }
+
+    @include respond(laptop) {
+        font-size: 85%;  //12px
+    }
+
+    @include respond(tablet) {
+        font-size: 80%; //11.2px
+    }
+
+    @include respond(phone) {
+        font-size: 75%; //10px
+    }
+}
