@@ -1,3 +1,46 @@
+.auth-form {
+  padding: 2rem;
+  border: 1px solid #d2d2d2;
+  border-radius: 5px; }
+  .auth-form__input {
+    padding: .5rem;
+    height: 40px;
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #d2d2d2;
+    outline: none; }
+    .auth-form__input:focus {
+      outline: none;
+      border-color: #84dccf; }
+    .auth-form__input-error {
+      padding: .5rem;
+      height: 40px;
+      display: block;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ef626c;
+      outline: none; }
+      .auth-form__input-error:focus {
+        outline: none;
+        border-color: #84dccf; }
+  .auth-form__divider {
+    margin-top: 15px; }
+  .auth-form__label {
+    display: block;
+    padding-bottom: 5px; }
+  .auth-form__alert {
+    display: block;
+    padding: .7rem;
+    color: #ef626c;
+    border: 1px solid #ef626c;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 10px; }
+  @media (max-width: 48em) {
+    .auth-form {
+      margin-top: 0; } }
+
 .nav {
   height: 45px;
   position: fixed;
@@ -42,7 +85,7 @@ h3 {
 h4 {
   font-size: 1.125rem; }
 
-p, li, a {
+p, li, a, button {
   font-size: 1.1rem;
   white-space: pre-wrap; }
 
@@ -52,6 +95,18 @@ a {
 
 ul {
   list-style-type: none; }
+
+.button {
+  padding: .6rem;
+  border-radius: 3px;
+  background: #84dccf;
+  color: white;
+  border: none;
+  display: block;
+  width: 100%;
+  cursor: pointer; }
+  .button:active, .button:focus {
+    outline: none; }
 
 * {
   font-family: 'Source Sans Pro', sans-serif;
@@ -63,10 +118,10 @@ html {
   font-size: 62.5%; }
   @media (max-width: 160em) {
     html {
-      font-size: 95%; } }
+      font-size: 100%; } }
   @media (max-width: 90em) {
     html {
-      font-size: 90%; } }
+      font-size: 95%; } }
   @media (max-width: 64em) {
     html {
       font-size: 85%; } }

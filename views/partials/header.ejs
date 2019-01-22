@@ -3,22 +3,29 @@
         <head>
             <meta charset="utf-8" />
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <title>Store - Login</title>
+            <title>Social App</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            
             <link rel="stylesheet" type="text/css" media="screen" href="/css/index.css" />
-
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
             <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css?family=Aleo:300,400,700" rel="stylesheet">
         </head>
 
         <body>
 
-        <nav class = 'nav'>
-            <div class = 'nav__container'>
-                <h3 class = 'nav__title'>Social App</h3>
-                <a href = '/login' class = 'nav__link'>Login</a>
-                <a href = '/home' class = 'nav__link'>Home</a>
-            </div>
-            
-        </nav>
+            <nav class = 'nav'>
+                <div class = 'nav__container'>
+                    <h3 class = 'nav__title'>Social App</h3>
+                    
+                    <a href = '/home' class = 'nav__link'>Home</a>
+                    
+                    <% if (isAuthenticated) { %>
+                        <a class = 'nav__link' href = '/user'>User</a>
+                        <a class = 'nav__link'>Log Out</a>
+                    <% } else { %>
+                        <a href = '/login' class = 'nav__link'>Login</a>
+                        <a href = '/register' class = 'nav__link'>Register</a>
+                    <% } %>
+                    
+                </div>
+            </nav>

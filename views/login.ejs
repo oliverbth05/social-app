@@ -1,13 +1,82 @@
 <% include partials/header %>
+
 <div class = 'container'>
-    <form>
+
+    <form class = 'auth-form' method = 'POST' action = '/login' id = 'form'>
+        
+        <% if (passwordError) { %>
+            <p class = 'auth-form__alert'><i class="fas fa-times"></i> Incorrect Password.</p>
+        <% } %>
+        
+        <% if (accountError) { %>
+            <p class = 'auth-form__alert'><i class="fas fa-times"></i> Account doesn't exist.</p>
+        <% } %>
+        
         <h4>Login</h4>
-        <label>Username</label>
-        <input type = 'text' name = 'username' />
-
-        <label>Password</label>
-        <input type = 'password' name = 'password' />
-
+        
+        <div class = 'auth-form__divider'>
+            <label class = 'auth-form__label'>Email Address</label>
+            <input class = 'auth-form__input' type = 'text' name = 'email' id = 'email' />
+        </div>
+        
+        <div class = 'auth-form__divider'>
+            <label class = 'auth-form__label'>Password</label>
+            <input class = 'auth-form__input' type = 'password' name = 'password' id = 'password'/>
+        </div>
+        
+        <div class = 'auth-form__divider'>
+            <button class = 'button' >Submit</button>
+        </div>
+        
     </form>
+    
 </div>
+
+<script>
+    
+    var email = document.getElementById('email');
+    var password = document.getElementById('password');
+    var form = document.getElementById('form');
+    
+    console.log(email.value, password.value)
+    
+    var alertComponent = document.createElement('P');
+    alertComponent.innerText = 'Please fill out all fields';
+    alertComponent.className = 'auth-form__alert';
+    
+    function submitHandler(e) {
+        if (!email.value || !password.value) {
+            e.preventDefault();
+            
+            if (!email.value) {
+                email.className = 'auth-form__input-error';
+                email.addEventListener('change', inputHandler);
+            }
+            
+            if (!password.value) {
+                password.className = 'auth-form__input-error';
+                password.addEventListener('change', inputHandler);
+            }
+            
+            form.prepend(alertComponent);
+            
+        }
+        else {
+            document.querySelector('button').disabled = true;
+        }
+    }
+    
+    function inputHandler(e) {
+        if (e.target.value) {
+            e.target.className = 'auth-form__input'
+        }
+    }
+    
+    form.addEventListener('submit', submitHandler);
+    email.addEventListener('change', inputHandler);
+    password.addEventListener('change', inputHandler);
+    
+    
+</script>
+
 <% include partials/footer %>

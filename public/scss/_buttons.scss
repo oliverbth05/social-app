@@ -1,0 +1,14 @@
+.button {
+    padding: .6rem;
+    border-radius: 3px;
+    background: $color5;
+    color: white;
+    border: none;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    
+    &:active, &:focus {
+        outline: none;
+    }
+}
