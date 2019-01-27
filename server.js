@@ -29,7 +29,7 @@ app.use(homeRoutes);
 app.use(userRoutes);
 app.use(showRoutes);
 
-mongoose.connect('mongodb://oliverbth05:joejoe9124@ds163354.mlab.com:63354/social_app', null).then(
+mongoose.connect('mongodb://<USER>:<PASS>@ds163354.mlab.com:63354/social_app', null).then(
     () => { console.log('connected to mongoDB') },
     err => { console.log(err) }
 );
