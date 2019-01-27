@@ -1,0 +1,183 @@
+<% include partials/header %>
+
+<div class = 'container'>
+    <input type = 'hidden' value = '<%=canLike%>'  id = 'canLike' readonly />
+    <input type = 'hidden' value = '<%=post._id%>'  id = 'post_id' readonly />
+    <input type = 'hidden' value = '<%=user._id%>'  id = 'user_id' readonly />
+    <input type = 'hidden' value = '<%=user.first_name%> <%=user.last_name%>'  id = 'user_name' readonly />
+    <input type = 'hidden' value = '<%=post.likes.length%>' id = 'likes' readonly />
+    
+    <a class = 'button m-b-1' onclick = 'window.history.back()'><i class="fas fa-chevron-circle-left"></i> Go Back</a>
+    <div class = 'box m-b-1'>
+        <h3><%=post.title%></h3>
+        <p><%=post.body%></p>
+    </div>
+    
+    
+    
+    <div class = 'box' id = 'root'>
+       
+    
+    </div>
+    
+    
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script crossorigin src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    
+    <script type = 'text/babel'>
+    
+    var post_id = document.getElementById('post_id').value;
+    var user_id = document.getElementById('user_id').value;
+    var user_name = document.getElementById('user_name').value;
+    var canLike = document.getElementById('canLike').value;
+    var likes = document.getElementById('likes').value;
+    
+    class App extends React.Component {
+        
+        state = {
+            comments: [],
+            loading: true,
+            commentField: '',
+            canLike: JSON.parse(canLike),
+            likes: JSON.parse(likes),
+            post_id,
+            user_id,
+            user_name
+        }
+        
+        componentDidMount() {
+        console.log(this.state)
+            axios.get('/show/' + post_id + '/comments')
+            .then(response => {
+                this.setState({
+                    comments: response.data,
+                    loading: false
+                })
+            })
+            .catch(err => {
+                
+            })
+        }
+        
+        inputHandler(e) {
+            this.setState({
+                [e.target.name] : e.target.value
+            })
+        }
+        
+        likePost() {
+            if (this.state.canLike) {
+                axios.post('/show/' + post_id + '/like', {user_id, post_id})
+                .then(response => {
+                    this.setState({
+                        likes: this.state.likes + 1,
+                        canLike: false
+                    })
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+            }
+        }
+        
+        postComment(e) {
+            e.preventDefault();
+            
+            if (!this.state.commentField) {
+                return
+            }
+            
+            var data = {
+                body: this.state.commentField,
+                post_id: post_id,
+                user_id: user_id,
+                user_name: user_name
+            }
+            this.setState({
+                loading: true,
+                commentField: ''
+            })
+            axios.post('/show/' + post_id + '/comment', data)
+            .then(response => {
+            console.log(response.data)
+                this.setState({
+                    comments: this.state.comments.concat(response.data),
+                    loading: false
+                })
+            })
+            .catch(err => {
+                
+            })
+        }
+        
+        render() {
+            
+            if(this.state.loading) {
+                
+                return <div>LOADING</div>
+                
+                
+            }
+            
+            else {
+                var commentsMapped;
+                if (this.state.comments.length > 0) {
+                        commentsMapped = this.state.comments.map(comment => {
+                            return <Comment {...comment} key = {comment._id} />
+                        })
+                }
+                
+                else {
+                    commentsMapped = <p>No Comments</p>
+                }
+            
+                return (
+                    <div>
+                    
+                    
+                        <div>
+                            <p><i className="far fa-eye"></i> <%=post.views%></p>
+                            <p><i className="far fa-thumbs-up"></i> {this.state.likes} </p>
+                        </div>
+                    
+                        { this.state.canLike ?
+                        <button onClick = {this.likePost.bind(this)} class = 'button m-r-1 m-b-2' ><i class="far fa-thumbs-up"></i> Like</button>
+                        : 
+                        <p>You liked this. </p>
+                        }
+                        <button className = 'button' ><i class="fas fa-map-pin"></i> Pin</button>
+                     
+                        <h2>Comments</h2>
+                        <form className = 'm-b-1' onSubmit = {this.postComment.bind(this)}>
+                            <input className = 'input-small m-r-s' name = 'commentField' onChange = {this.inputHandler.bind(this)} value = {this.state.commentField}/>
+                            <button className = 'button'>Submit</button>
+                        </form>
+                        {commentsMapped}
+                    </div>
+                )
+            }
+        }
+    }
+    
+    const Comment = (props) => {
+        return (
+            <div className = 'comment'>
+                <p className = 'comment__body'>{props.body}</p>
+                <div className = 'comment__info'>
+                    <p>{props.user_name}</p>
+                    <p>{props.date}</p>
+                </div>
+            </div>
+        )
+    }
+    
+    ReactDOM.render(<App></App>, document.getElementById('root'))
+    
+    </script>
+  
+ 
+</div>    
+    
+<% include partials/footer %>

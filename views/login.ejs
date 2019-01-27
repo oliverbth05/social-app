@@ -12,21 +12,29 @@
             <p class = 'auth-form__alert'><i class="fas fa-times"></i> Account doesn't exist.</p>
         <% } %>
         
+        <% if (isAuthenticated) { %>
+        
+        <p>You are already logged in.</p>
+        
+        <%} else { %>
+        
         <h4>Login</h4>
         
         <div class = 'auth-form__divider'>
             <label class = 'auth-form__label'>Email Address</label>
-            <input class = 'auth-form__input' type = 'text' name = 'email' id = 'email' />
+            <input class = 'input-block' type = 'text' name = 'email' id = 'email' />
         </div>
         
         <div class = 'auth-form__divider'>
             <label class = 'auth-form__label'>Password</label>
-            <input class = 'auth-form__input' type = 'password' name = 'password' id = 'password'/>
+            <input class = 'input-block' type = 'password' name = 'password' id = 'password'/>
         </div>
         
         <div class = 'auth-form__divider'>
-            <button class = 'button' >Submit</button>
+            <button class = 'button-block' >Submit</button>
         </div>
+        
+        <% } %>
         
     </form>
     
@@ -49,12 +57,12 @@
             e.preventDefault();
             
             if (!email.value) {
-                email.className = 'auth-form__input-error';
+                email.className = 'input-block-error';
                 email.addEventListener('change', inputHandler);
             }
             
             if (!password.value) {
-                password.className = 'auth-form__input-error';
+                password.className = 'input-block-error';
                 password.addEventListener('change', inputHandler);
             }
             
@@ -68,7 +76,7 @@
     
     function inputHandler(e) {
         if (e.target.value) {
-            e.target.className = 'auth-form__input'
+            e.target.className = 'input-block'
         }
     }
     

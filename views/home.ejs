@@ -1,7 +1,19 @@
 <% include partials/header %>
 
 <div class = 'container'>
-    Home
+    <a class = 'button m-b-1' href=  '/new'><i class="fas fa-pen"></i> New Post</a>
+    <h3>Your Feed</h3>
+    
+    
+    <div class = 'card-container'>
+        <% posts.forEach(post => { %>
+            <div onclick = 'window.location = "/show/<%=post._id%>"' class = 'card'>
+                
+                    <h4 class = 'card__title'><%= post.title %></h4>
+                
+            </div>
+        <% }) %>
+    </div>
 </div>
 
 <% include partials/footer %>

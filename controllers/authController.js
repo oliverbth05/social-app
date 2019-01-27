@@ -1,55 +1,51 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
-
-
 exports.get_login = async(req, res) => {
-    res.render('login.ejs', {passwordError: false, accountError: false, route: 'login', isAuthenticated: req.session.isAuthenticated})
+    res.render('login.ejs', {passwordError: false, accountError: false, route: 'login', isAuthenticated: req.session.isAuthenticated, user: req.session.user})
 }
 
 exports.post_login = async(req, res) => {
     
     try {
         var foundUser = await User.findOne({email: req.body.email});
-        console.log(foundUser);
-        
         if (foundUser) {
             var isValid = bcrypt.compareSync(req.body.password, foundUser.password);
             if(isValid) {
-                console.log(req.session)
+                var userData = {...foundUser.toObject()}
+                delete userData.password;
+                req.session.user = userData;
                 req.session.isAuthenticated = true;
-                res.render('home.ejs', {isAuthenticated: true});
+                res.redirect('/home');
             }
             else {
-                console.log('incorrect password')
                 res.render('login.ejs', { passwordError: true, accountError: false, route: 'login', isAuthenticated: req.session.isAuthenticated})
             }
         }
         else {
-            console.log('No such user')
             res.render('login.ejs', { passwordError: false, accountError: true, route: 'login', isAuthenticated: req.session.isAuthenticated });
         }
     }
-    
     catch (err) {
         console.log(err)
         res.end()
     }
-   
 } 
+
+exports.get_logout = async(req, res) => {
+    req.session.isAuthenticated = false;
+    res.redirect('/login')
+}
 
 exports.get_register = async(req, res) => {
     res.render('register.ejs', {userExists: false, route: 'register', isAuthenticated: req.session.isAuthenticated})
 }
 
 exports.post_register = async(req, res) => {
-
     const doesExist = await User.findOne({email: req.body.email});
-    
     if(doesExist) {
         res.render('register.ejs', {userExists: true, route: 'register', isAuthenticated: req.session.isAuthenticated})
     }
-    
     else {
         var newUser = await User.create({
             first_name: req.body.first_name,
@@ -57,6 +53,9 @@ exports.post_register = async(req, res) => {
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, 12)
         })
+        
+        req.session.user = {...newUser.toObject()}
+        req.session.isAuthenticated = true
         res.redirect('/home')
     }
 }

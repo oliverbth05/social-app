@@ -1,0 +1,21 @@
+.comment {
+    border: 1px solid $grey-1;
+    margin-bottom: .75rem;
+    
+    &__body {
+        padding: .7rem .5rem .7rem .5rem;
+
+    }
+    
+    &__info {
+        background: $grey-4;
+        padding: .2rem .5rem .2rem .5rem;
+        p {
+            display: inline-block;
+            font-size: .9rem;
+        }
+        
+
+    }
+    
+}

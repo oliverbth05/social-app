@@ -1,0 +1,17 @@
+<% include partials/header %>
+
+<div class = 'container'>
+    <h1><%= userData.first_name%> <%=userData.last_name%></h1>
+    
+    <h3><%= user.first_name %>'s Posts</h3>
+    <div class = 'card-container'>
+        <% posts.forEach(post => { %>
+        <div onclick = 'window.location = "/show/<%=post._id%>"' class = 'card'>
+            <p class = 'card__title'><%= post.title %></p>
+            <p class = 'card__body'><%= post.body %></p>
+        </div>
+        <% }) %>
+    </div>
+</div>
+
+<% include partials/footer %>

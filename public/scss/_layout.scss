@@ -1,39 +1,88 @@
-.nav {
-    height: 45px;
-    position: fixed;
-    top: 0;
+
+.container {
+    margin: auto;
     width: 100%;
-    background: $color4;
+    padding: 1rem;
+}
 
-    &__container {
-        max-width: 1000px;
-        margin: auto;
-        height: 100%;
+.card-container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+} 
+
+.card {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    background: $grey-5;
+    cursor: pointer;
+    transition: padding .2s;
+    color: $color3;
+    padding: 1rem;
     
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    &:hover {
+        background: $grey-4;
+        padding: 2rem 1rem 2rem 1rem;
     }
-
+    
     &__title {
-        color: $color5;
-        flex-grow: 1;
+        display: block;
+        margin: 0;
+        padding: 0;
+        
+        
     }
+    
+    &__body {
+        display: block;
+        margin: 0;
+        padding: 0;
+        
+    }
+}
 
-    &__link {
-        color: $color5;
-        padding: 10px;
-        margin: 10px;
-        text-decoration: none;
+.tag__container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+.tag {
+    border-radius: 3px;
+    background: $color5;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    
+    p {
+        padding: .7rem;
+        display: inline-block;
+        margin-right: 5px;
+        height: 100%;
+    }
+    
+    i {
+        font-size: 1.3rem;
+        padding: .7rem;
+        background: $color2;
+        display: inline-block;
+        height: 100%;
+        cursor: pointer;
         
         &:hover {
-            font-weight: bold;
+            background: $color2-dark;
         }
     }
 }
 
-.container {
-    max-width: 1000px;
-    margin: auto;
-    margin-top: 45px;
+.box {
+    padding: 1rem;
+    border: 1px solid $grey-1;
+    border-radius: 5px;
 }

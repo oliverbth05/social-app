@@ -1,0 +1,41 @@
+
+.nav {
+    
+    height: 100vh;
+    left: 0;
+    bottom: 0; 
+    position: fixed;
+    width: 10rem;
+    background: linear-gradient(to bottom, $color5, $color5-dark);
+    box-shadow: inset -1px 0px 25px 0px rgba(0,0,0,0.23);
+
+    &__container {
+        height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: stretch;
+        flex-direction: column;
+    }
+
+    &__title {
+        display: block;
+        color: white;
+        flex-grow: 5;
+        padding-top: 1rem;
+        font-size: 3rem;
+    }
+
+    &__link {
+        width: 100%;
+        transition: all .2s;
+        color: white;
+        padding: 1rem;
+        text-decoration: none;
+        text-align: center;
+        
+        &:hover {
+            padding: 2rem;
+            background: $color5-dark;
+        }
+    }
+}
