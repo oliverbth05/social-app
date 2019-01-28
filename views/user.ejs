@@ -1,9 +1,19 @@
 <% include partials/header %>
 
 <div class = 'container'>
-    <h1><%= userData.first_name%> <%=userData.last_name%></h1>
+    <img class = 'avatar m-b-1' src = 'https://api.adorable.io/avatars/100/<%=userData.first_name%> <%=userData.last_name%>.png' />
+    <h3 class = 'font-normal text-center m-b-1'><%= userData.first_name%> <%=userData.last_name%></h3>
     
-    <h3><%= user.first_name %>'s Posts</h3>
+    <div class = 'box'>
+        <h4 class = 'm-b-1'>Summary</h4>
+        <p><%=userData.summary%></p>
+    </div>
+    
+    <% if (isUser) { %>
+    <a href = '/user/<%=userData._id%>/edit' class = 'button m-t-1 m-b-1'><i class="fas fa-user-edit"></i> Edit Profile</a>
+    <% } %>
+    
+    <h3><%= userData.first_name %>'s Posts</h3>
     <div class = 'card-container'>
         <% posts.forEach(post => { %>
         <div onclick = 'window.location = "/show/<%=post._id%>"' class = 'card'>

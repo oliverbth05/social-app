@@ -1,17 +1,16 @@
 @import './_mixins.scss';
 @import './_variables.scss';
-
-
 @import './_layout.scss';
 @import './_typography.scss';
-
+@import './_animations.scss';
 @import './_helpers.scss';
 
 @import './components/_nav.scss';
 @import './components/_forms.scss';
 @import './components/_inputs.scss';
 @import './components/_buttons.scss';
-@import './components/_comment.scss';
+@import './components/_comment.scss'; 
+@import './components/_loader.scss';
 
 
 * {  
@@ -22,7 +21,7 @@
 } 
 
 body {
-    margin-left: 10rem;
+    margin-left: 8rem;
 }
 
     

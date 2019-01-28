@@ -2,29 +2,45 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs'); 
 
 exports.get_login = async(req, res) => {
-    res.render('login.ejs', {passwordError: false, accountError: false, route: 'login', isAuthenticated: req.session.isAuthenticated, user: req.session.user})
+    res.render('login.ejs', {
+        passwordError : false,
+        accountError : false,
+        route : 'login',
+        isAuthenticated : req.session.isAuthenticated,
+        user : req.session.user
+    })
 }
 
 exports.post_login = async(req, res) => {
-    
     try {
-        var foundUser = await User.findOne({email: req.body.email});
-        if (foundUser) {
-            var isValid = bcrypt.compareSync(req.body.password, foundUser.password);
-            if(isValid) {
-                var userData = {...foundUser.toObject()}
-                delete userData.password;
-                req.session.user = userData;
-                req.session.isAuthenticated = true;
-                res.redirect('/home');
-            }
-            else {
-                res.render('login.ejs', { passwordError: true, accountError: false, route: 'login', isAuthenticated: req.session.isAuthenticated})
-            }
+        
+        var foundUser = await User.findOne({email : req.body.email});
+        
+        if (!foundUser) {
+            return res.render('login.ejs', {
+                passwordError : false,
+                accountError : true,
+                route : 'login',
+                isAuthenticated : req.session.isAuthenticated
+            });
         }
-        else {
-            res.render('login.ejs', { passwordError: false, accountError: true, route: 'login', isAuthenticated: req.session.isAuthenticated });
-        }
+            
+        var isValid = bcrypt.compareSync(req.body.password, foundUser.password);
+            
+        if(!isValid) {
+            return res.render('login.ejs', { 
+                passwordError : true,
+                accountError : false,
+                route : 'login',
+                isAuthenticated : req.session.isAuthenticated
+            })
+        } 
+                
+        var userData = {...foundUser.toObject()}
+        delete userData.password;
+        req.session.user = userData;
+        req.session.isAuthenticated = true;
+        res.redirect('/home');
     }
     catch (err) {
         console.log(err)
@@ -43,19 +59,23 @@ exports.get_register = async(req, res) => {
 
 exports.post_register = async(req, res) => {
     const doesExist = await User.findOne({email: req.body.email});
+    
     if(doesExist) {
-        res.render('register.ejs', {userExists: true, route: 'register', isAuthenticated: req.session.isAuthenticated})
-    }
-    else {
-        var newUser = await User.create({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, 12)
+        return res.render('register.ejs', {
+            userExists : true,
+            route : 'register',
+            isAuthenticated : req.session.isAuthenticated
         })
-        
-        req.session.user = {...newUser.toObject()}
-        req.session.isAuthenticated = true
-        res.redirect('/home')
     }
+    
+    var newUser = await User.create({
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 12)
+    })
+        
+    req.session.user = {...newUser.toObject()}
+    req.session.isAuthenticated = true
+    res.redirect('/home')
 }

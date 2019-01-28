@@ -1,25 +1,29 @@
 <% include partials/header %>
 
 <div class = 'container'>
+    
     <input type = 'hidden' value = '<%=canLike%>'  id = 'canLike' readonly />
+    <input type = 'hidden' value = '<%=canPin%>'  id = 'canPin' readonly />
     <input type = 'hidden' value = '<%=post._id%>'  id = 'post_id' readonly />
     <input type = 'hidden' value = '<%=user._id%>'  id = 'user_id' readonly />
+    <input type = 'hidden' value = '<%=post.title%>' id = 'post_title' readonly />
     <input type = 'hidden' value = '<%=user.first_name%> <%=user.last_name%>'  id = 'user_name' readonly />
     <input type = 'hidden' value = '<%=post.likes.length%>' id = 'likes' readonly />
     
     <a class = 'button m-b-1' onclick = 'window.history.back()'><i class="fas fa-chevron-circle-left"></i> Go Back</a>
     <div class = 'box m-b-1'>
-        <h3><%=post.title%></h3>
-        <p><%=post.body%></p>
+        <img class = 'avatar' src = 'https://api.adorable.io/avatars/130/<%=post.user_name%>.png' />
+        <a href = '/user/<%=post.user_id%>' class = 'text-center font-normal m-b-2'><%=post.user_name%></a>
+        <h3 class = 'm-b-1 text-center'><%=post.title%></h3>
+        <p class = 'm-b-1'><%=post.body%></p>
+        <p><%=post.date%></p>
     </div>
     
+    <% if (isUser) { %>
+        <button class = 'button m-b-1'><i class="fas fa-edit"></i> Edit Post</button>
+    <% } %>
     
-    
-    <div class = 'box' id = 'root'>
-       
-    
-    </div>
-    
+    <div class = 'box' id = 'root'></div> <!-- React Mounting Point -->
     
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
@@ -27,28 +31,23 @@
     <script crossorigin src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
     
     <script type = 'text/babel'>
-    
-    var post_id = document.getElementById('post_id').value;
-    var user_id = document.getElementById('user_id').value;
-    var user_name = document.getElementById('user_name').value;
-    var canLike = document.getElementById('canLike').value;
-    var likes = document.getElementById('likes').value;
-    
+
     class App extends React.Component {
         
         state = {
             comments: [],
             loading: true,
             commentField: '',
-            canLike: JSON.parse(canLike),
-            likes: JSON.parse(likes),
-            post_id,
-            user_id,
-            user_name
+            canLike: JSON.parse(document.getElementById('canLike').value),
+            canPin: JSON.parse(document.getElementById('canPin').value),
+            likes: JSON.parse(document.getElementById('likes').value),
+            post_id: document.getElementById('post_id').value,
+            post_title: document.getElementById('post_title').value,
+            user_id: document.getElementById('user_id').value,
+            user_name: document.getElementById('user_name').value
         }
         
         componentDidMount() {
-        console.log(this.state)
             axios.get('/show/' + post_id + '/comments')
             .then(response => {
                 this.setState({
@@ -61,40 +60,70 @@
             })
         }
         
+        
+        
         inputHandler(e) {
             this.setState({
                 [e.target.name] : e.target.value
             })
         }
         
+        
+        
         likePost() {
-            if (this.state.canLike) {
-                axios.post('/show/' + post_id + '/like', {user_id, post_id})
-                .then(response => {
-                    this.setState({
-                        likes: this.state.likes + 1,
-                        canLike: false
-                    })
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+            if (!this.state.canLike) {
+                return
             }
+            axios.post('/show/' + post_id + '/like', {
+                user_id : this.state.user_id,
+                post_id : this.state.post_id
+            })
+            .then(response => {
+                this.setState({
+                    likes : this.state.likes + 1,
+                    canLike : false
+                })
+            })
+            .catch(err => {
+                console.log(err)
+            })
         }
         
+        
+        
+        pinPost() {
+            if (!this.state.canPin) {
+                return
+            }
+            axios.post('/show/' + post_id + '/pin', {
+                user_id : this.state.user_id,
+                post_id : this.state.post_id,
+                post_title : this.state.post_title
+            })
+            .then(response => {
+                this.setState({
+                    canPin : false
+                })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+        
+        
+
         postComment(e) {
             e.preventDefault();
-            
             if (!this.state.commentField) {
                 return
             }
-            
             var data = {
-                body: this.state.commentField,
-                post_id: post_id,
-                user_id: user_id,
-                user_name: user_name
+                body : this.state.commentField,
+                post_id : this.state.post_id,
+                user_id : this.state.user_id,
+                user_name : this.state.user_name
             }
+            console.log(data)
             this.setState({
                 loading: true,
                 commentField: ''
@@ -112,13 +141,11 @@
             })
         }
         
+        
+        
         render() {
-            
             if(this.state.loading) {
-                
-                return <div>LOADING</div>
-                
-                
+                return <div className = 'loader'></div>
             }
             
             else {
@@ -128,28 +155,30 @@
                             return <Comment {...comment} key = {comment._id} />
                         })
                 }
-                
                 else {
                     commentsMapped = <p>No Comments</p>
                 }
-            
                 return (
                     <div>
-                    
-                    
-                        <div>
-                            <p><i className="far fa-eye"></i> <%=post.views%></p>
-                            <p><i className="far fa-thumbs-up"></i> {this.state.likes} </p>
+                        <div className = 'm-b-2'>
+                            <span><i className="far fa-eye"></i> <%=post.views%>  </span>
+                            <span><i className="far fa-thumbs-up"></i> {this.state.likes} </span>
+                            <br />
+                           
+                            {this.state.canLike ?
+                            <button onClick = {this.likePost.bind(this)} class = 'button m-r-s' ><i class="far fa-thumbs-up"></i> Like</button>
+                            : 
+                            <span className = 'color-primary'><i className="fas fa-check-circle"></i> Liked </span>
+                            }
+                            
+                            
+                            {this.state.canPin ?
+                            <button onClick = {this.pinPost.bind(this)} className = 'button' ><i class="fas fa-map-pin"></i> Pin </button>
+                            : 
+                            <span className = 'color-primary'><i className="fas fa-check-circle"></i> Pinned </span>
+                            }
                         </div>
-                    
-                        { this.state.canLike ?
-                        <button onClick = {this.likePost.bind(this)} class = 'button m-r-1 m-b-2' ><i class="far fa-thumbs-up"></i> Like</button>
-                        : 
-                        <p>You liked this. </p>
-                        }
-                        <button className = 'button' ><i class="fas fa-map-pin"></i> Pin</button>
-                     
-                        <h2>Comments</h2>
+                        <h3 class = 'font-normal'>Comments</h3>
                         <form className = 'm-b-1' onSubmit = {this.postComment.bind(this)}>
                             <input className = 'input-small m-r-s' name = 'commentField' onChange = {this.inputHandler.bind(this)} value = {this.state.commentField}/>
                             <button className = 'button'>Submit</button>
@@ -164,9 +193,13 @@
     const Comment = (props) => {
         return (
             <div className = 'comment'>
-                <p className = 'comment__body'>{props.body}</p>
+                <div class = 'comment__top'>
+                    <img className = 'comment__avatar' src = {'https://api.adorable.io/avatars/130/' + props.user_name + '.png'} />
+                    <p className = 'comment__body'>{props.body}</p>
+                </div>
+                
                 <div className = 'comment__info'>
-                    <p>{props.user_name}</p>
+                    <a href = {'/user/' + props.user_id}>{props.user_name}</a>
                     <p>{props.date}</p>
                 </div>
             </div>

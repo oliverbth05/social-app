@@ -38,7 +38,6 @@
     
     &:hover {
         background: $grey-4;
-        padding: 2rem 1rem 2rem 1rem;
     }
     
     &__title {
@@ -98,4 +97,13 @@
     padding: 1rem;
     border: 1px solid $grey-1;
     border-radius: 5px;
+}
+
+.avatar {
+    display: block;
+    height: 6rem;
+    width: 6rem;
+    background: rgb(220, 220, 220);
+    border-radius: 50%;
+    margin: auto;
 }

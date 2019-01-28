@@ -1,0 +1,10 @@
+.loader {
+    height: 5rem;
+    width: 5rem;
+    border: 2px solid transparent;
+    border-bottom-color: $color5;
+    border-radius: 50%;
+    animation: spin;
+    animation-duration: .7s;
+    animation-iteration-count: infinite;
+}

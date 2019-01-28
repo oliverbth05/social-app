@@ -31,8 +31,7 @@
   color: #22181c;
   padding: 1rem; }
   .card:hover {
-    background: #f0f0f0;
-    padding: 2rem 1rem 2rem 1rem; }
+    background: #f0f0f0; }
   .card__title {
     display: block;
     margin: 0;
@@ -76,6 +75,14 @@
   border: 1px solid #d2d2d2;
   border-radius: 5px; }
 
+.avatar {
+  display: block;
+  height: 6rem;
+  width: 6rem;
+  background: gainsboro;
+  border-radius: 50%;
+  margin: auto; }
+
 h1, h2, h3, h4 {
   font-family: 'Quicksand', sans-serif;
   color: #16343C; }
@@ -103,6 +110,27 @@ a {
 
 ul {
   list-style-type: none; }
+
+.text-center {
+  text-align: center; }
+
+.font-light {
+  font-weight: lighter; }
+
+.font-normal {
+  font-weight: normal; }
+
+.font-bold {
+  font-weight: bold; }
+
+.color-primary {
+  color: #14BDEB; }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
 
 .m-a-0 {
   margin: 0 0 !important; }
@@ -308,7 +336,7 @@ Padding
   left: 0;
   bottom: 0;
   position: fixed;
-  width: 10rem;
+  width: 8rem;
   background: linear-gradient(to bottom, #14BDEB, #119BC1);
   box-shadow: inset -1px 0px 25px 0px rgba(0, 0, 0, 0.23); }
   .nav__container {
@@ -456,14 +484,32 @@ Padding
 .comment {
   border: 1px solid #d2d2d2;
   margin-bottom: .75rem; }
+  .comment__top {
+    display: flex;
+    align-items: center; }
   .comment__body {
     padding: .7rem .5rem .7rem .5rem; }
+  .comment__avatar {
+    margin: .5rem;
+    height: 3.5rem;
+    width: 3.5rem;
+    border-radius: 50%; }
   .comment__info {
     background: #f0f0f0;
     padding: .2rem .5rem .2rem .5rem; }
     .comment__info p {
       display: inline-block;
       font-size: .9rem; }
+
+.loader {
+  height: 5rem;
+  width: 5rem;
+  border: 2px solid transparent;
+  border-bottom-color: #14BDEB;
+  border-radius: 50%;
+  animation: spin;
+  animation-duration: .7s;
+  animation-iteration-count: infinite; }
 
 * {
   font-family: 'Source Sans Pro', sans-serif;
@@ -472,7 +518,7 @@ Padding
   box-sizing: border-box; }
 
 body {
-  margin-left: 10rem; }
+  margin-left: 8rem; }
 
 html {
   font-size: 62.5%; }

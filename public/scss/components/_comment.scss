@@ -2,9 +2,21 @@
     border: 1px solid $grey-1;
     margin-bottom: .75rem;
     
+    &__top {
+        display: flex;
+        align-items: center;
+    }
+    
     &__body {
         padding: .7rem .5rem .7rem .5rem;
 
+    }
+    
+    &__avatar {
+        margin: .5rem;
+        height: 3.5rem;
+        width: 3.5rem;
+        border-radius: 50%;
     }
     
     &__info {

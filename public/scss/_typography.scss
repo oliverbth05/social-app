@@ -33,3 +33,23 @@ a {
 ul {
     list-style-type: none;
 }
+
+.text-center {
+    text-align: center;
+}
+
+.font-light {
+    font-weight: lighter;
+}
+
+.font-normal {
+    font-weight: normal;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.color-primary {
+    color: $color5;
+}

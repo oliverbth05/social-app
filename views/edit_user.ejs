@@ -1,0 +1,63 @@
+<% include partials/header %>
+
+
+    <input type = 'hidden' readonly id = 'summary' value = '<%=userData.summary%>' />
+    <input type = 'hidden' readonly id = 'user_id' value = '<%=userData._id%>' />
+
+    <div class = 'container' id = 'root'>
+        
+        
+       
+    </div>
+    
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script crossorigin src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'></script>
+    <script type = 'text/babel'>
+    
+        class App extends React.Component {
+            
+            state = {
+                summary: document.getElementById('summary').value,
+                user_id: document.getElementById('user_id').value
+            }
+            
+            inputHandler(e) {
+                this.setState({
+                    [e.target.name] : e.target.value
+                })
+            }
+            
+            submitChanges(e) {
+                e.preventDefault();
+                
+                if(this.state.summary) {
+                    axios.put('/user/' + this.state.user_id, {summary: this.state.summary, user_id: this.state.user_id})
+                    .then(response => {
+                        window.location.href = '/user/' + this.state.user_id
+                    })
+                    .catch(err => {
+                        
+                    })
+                }
+            }
+            
+            render() {
+                return (
+                    <form onSubmit = {this.submitChanges.bind(this)}>
+                        <label>Summary</label>
+                        <textarea onChange = {this.inputHandler.bind(this)} className = 'textarea m-b-1' value = {this.state.summary} name = 'summary'></textarea>
+                        <button className = 'button-block'>Save Changes</button>
+                    </form>
+                )
+            }
+        }
+        
+        ReactDOM.render(<App></App>, document.getElementById('root'))
+    </script>
+        
+
+
+
+<% include partials/footer %>
