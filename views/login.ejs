@@ -1,8 +1,9 @@
 <% include partials/header %>
 
-<div class = 'container'>
+<div class = 'container-flex-center'>
 
-    <form class = 'auth-form' method = 'POST' action = '/login' id = 'form'>
+    <div class = 'container-700'>
+<form class = 'auth-form' method = 'POST' action = '/login' id = 'form'>
         
         <% if (passwordError) { %>
             <p class = 'auth-form__alert'><i class="fas fa-times"></i> Incorrect Password.</p>
@@ -37,6 +38,9 @@
         <% } %>
         
     </form>
+    </div>
+
+    
     
 </div>
 

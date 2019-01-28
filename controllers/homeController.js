@@ -38,7 +38,7 @@ exports.post_new = async(req, res) => {
             title: req.body.title,
             body: req.body.body,
             user_id: req.body.user_id,
-            username: req.body.username,
+            user_name: req.body.user_name,
             image: req.body.image,
             
         })

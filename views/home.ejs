@@ -10,6 +10,10 @@
             <div onclick = 'window.location = "/show/<%=post._id%>"' class = 'card'>
                 
                     <h4 class = 'card__title'><%= post.title %></h4>
+                    <p><%=post.user_name%></p>
+                    <p><%=post.date%></p>
+                    <p><i class = "far fa-eye"></i> <%=post.views%></p>
+                    <p><i class = "far fa-thumbs-up"></i> <%=post.likes.length%></p>
                 
             </div>
         <% }) %>

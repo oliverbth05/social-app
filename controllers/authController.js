@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs'); 
 
 exports.get_login = async(req, res) => {
     res.render('login.ejs', {passwordError: false, accountError: false, route: 'login', isAuthenticated: req.session.isAuthenticated, user: req.session.user})
