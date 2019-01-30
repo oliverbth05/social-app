@@ -1,6 +1,5 @@
 
 .nav {
-    
     height: 100vh;
     left: 0;
     bottom: 0; 
@@ -38,4 +37,24 @@
             background: $color5-dark;
         }
     }
+}
+
+.home-nav {
+    background: $grey-4;
+    width: 
+    top: 0;
+    left: 0;
+    margin-left: 8rem;
+    position: fixed;
+    height: 3.5rem;
+    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.23);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem 0 1rem;
+}
+
+.home-nav__spacer {
+    display: block;
+    height: 3.5rem;
 }

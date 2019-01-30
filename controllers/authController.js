@@ -10,7 +10,6 @@ exports.get_login = async(req, res) => {
         user : req.session.user
     })
 }
-
 exports.post_login = async(req, res) => {
     try {
         
@@ -47,16 +46,13 @@ exports.post_login = async(req, res) => {
         res.end()
     }
 } 
-
 exports.get_logout = async(req, res) => {
     req.session.isAuthenticated = false;
     res.redirect('/login')
 }
-
 exports.get_register = async(req, res) => {
     res.render('register.ejs', {userExists: false, route: 'register', isAuthenticated: req.session.isAuthenticated})
 }
-
 exports.post_register = async(req, res) => {
     const doesExist = await User.findOne({email: req.body.email});
     
@@ -74,8 +70,21 @@ exports.post_register = async(req, res) => {
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 12)
     })
+
+    var welcomeNotification = {
+        title: 'Welcome to Social App',
+        body: 'Blah blah blah blah blah',
+        read: false
+    }
+
+    await User.updateOne({_id : newUser._id}, {$push: {notifications: welcomeNotification}, $inc: {unread_notifications: 1}})
+
+    newUser.notifications.push(welcomeNotification);
+    newUser.unread_notifications = 1;
+
+    console.log(newUser)
         
-    req.session.user = {...newUser.toObject()}
+    req.session.user = newUser;
     req.session.isAuthenticated = true
     res.redirect('/home')
 }

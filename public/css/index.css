@@ -1,6 +1,6 @@
 .container {
   margin: auto;
-  width: 100%;
+  max-width: 100%;
   padding: 1rem; }
 
 .container-flex-center {
@@ -362,6 +362,23 @@ Padding
       padding: 2rem;
       background: #119BC1; }
 
+.home-nav {
+  background: #f0f0f0;
+  top: 0;
+  left: 0;
+  margin-left: 8rem;
+  position: fixed;
+  height: 3.5rem;
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.23);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem 0 1rem; }
+
+.home-nav__spacer {
+  display: block;
+  height: 3.5rem; }
+
 .auth-form {
   padding: 2rem;
   border: 1px solid #d2d2d2;
@@ -455,13 +472,14 @@ Padding
 
 .button {
   transition: all .2s;
-  padding: .65rem;
+  padding: .5rem .65rem .5rem .65rem;
   border-radius: 3px;
   background: #14BDEB;
   color: white;
   border: none;
   display: inline-block;
-  cursor: pointer; }
+  cursor: pointer;
+  text-align: center; }
   .button:active, .button:focus {
     outline: none; }
   .button:hover {
@@ -509,7 +527,20 @@ Padding
   border-radius: 50%;
   animation: spin;
   animation-duration: .7s;
-  animation-iteration-count: infinite; }
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; }
+
+.loader-button {
+  height: 1rem;
+  width: 1rem;
+  border: 1px solid transparent;
+  border-bottom-color: white;
+  border-radius: 50%;
+  animation: spin;
+  animation-duration: .7s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  margin: auto; }
 
 * {
   font-family: 'Source Sans Pro', sans-serif;

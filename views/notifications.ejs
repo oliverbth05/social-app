@@ -1,0 +1,13 @@
+<% include partials/header %>
+
+<div>
+
+<% user.notifications.forEach(notification => { %>
+    <h4><%=notification.title%></h4>
+    <p><%=notification.body%></p>
+    <p><%=notification.read%></p>
+<% }) %>
+
+</div>
+
+<% include partials/footer %>

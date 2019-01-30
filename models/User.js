@@ -9,7 +9,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'No summary provided'
     },
-    pins: [{}]
+    pins: [{}],
+    notifications: [{}],
+    unread_notifications: {
+        type: Number,
+        default: 0
+    }
 });
 
 const User = mongoose.model('User', userSchema);

@@ -25,7 +25,7 @@
                         <a class = 'nav__link' href = '/user/<%=user._id%>'><%= user.first_name %></a>
                         <a href = '/contacts' class = 'nav__link'>Contacts</a>
                         <a href = '/messages' class = 'nav__link'>Messages</a>
-                        <a href = '/notifications' class = 'nav__link'>Notifications</a>
+                        <a href = '/notifications' class = 'nav__link'>Notifications <%=user.unread_notifications%></a>
                         <a href = '/logout' class = 'nav__link'>Log Out</a>
                     <% } else { %>
                         <a href = '/login' class = 'nav__link'>Login</a>

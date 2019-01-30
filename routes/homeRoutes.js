@@ -9,4 +9,6 @@ router.get('/home', homeController.get_home)
 router.get('/new', homeController.get_new)
 router.post('/new', homeController.post_new)
 
+router.get('/notifications', homeController.get_notifications)
+
 module.exports = router;

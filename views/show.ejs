@@ -36,7 +36,9 @@
         
         state = {
             comments: [],
-            loading: true,
+            comments_loading: true,
+            like_loading: false,
+            pin_loading: false,
             commentField: '',
             canLike: JSON.parse(document.getElementById('canLike').value),
             canPin: JSON.parse(document.getElementById('canPin').value),
@@ -48,11 +50,11 @@
         }
         
         componentDidMount() {
-            axios.get('/show/' + post_id + '/comments')
+            axios.get('/show/' + this.state.post_id + '/comments')
             .then(response => {
                 this.setState({
                     comments: response.data,
-                    loading: false
+                    comments_loading: false
                 })
             })
             .catch(err => {
@@ -74,6 +76,9 @@
             if (!this.state.canLike) {
                 return
             }
+            this.setState({
+                like_loading: true
+            })
             axios.post('/show/' + post_id + '/like', {
                 user_id : this.state.user_id,
                 post_id : this.state.post_id
@@ -81,7 +86,8 @@
             .then(response => {
                 this.setState({
                     likes : this.state.likes + 1,
-                    canLike : false
+                    canLike : false,
+                    like_loading: false
                 })
             })
             .catch(err => {
@@ -95,6 +101,9 @@
             if (!this.state.canPin) {
                 return
             }
+            this.setState({
+                pin_loading: true
+            })
             axios.post('/show/' + post_id + '/pin', {
                 user_id : this.state.user_id,
                 post_id : this.state.post_id,
@@ -102,7 +111,8 @@
             })
             .then(response => {
                 this.setState({
-                    canPin : false
+                    canPin : false,
+                    pin_loading: false
                 })
             })
             .catch(err => {
@@ -117,6 +127,7 @@
             if (!this.state.commentField) {
                 return
             }
+
             var data = {
                 body : this.state.commentField,
                 post_id : this.state.post_id,
@@ -125,7 +136,7 @@
             }
             console.log(data)
             this.setState({
-                loading: true,
+                comments_loading: true,
                 commentField: ''
             })
             axios.post('/show/' + post_id + '/comment', data)
@@ -133,7 +144,7 @@
             console.log(response.data)
                 this.setState({
                     comments: this.state.comments.concat(response.data),
-                    loading: false
+                    comments_loading: false
                 })
             })
             .catch(err => {
@@ -144,7 +155,7 @@
         
         
         render() {
-            if(this.state.loading) {
+            if(this.state.comments_loading) {
                 return <div className = 'loader'></div>
             }
             
@@ -165,18 +176,9 @@
                             <span><i className="far fa-thumbs-up"></i> {this.state.likes} </span>
                             <br />
                            
-                            {this.state.canLike ?
-                            <button onClick = {this.likePost.bind(this)} class = 'button m-r-s' ><i class="far fa-thumbs-up"></i> Like</button>
-                            : 
-                            <span className = 'color-primary'><i className="fas fa-check-circle"></i> Liked </span>
-                            }
-                            
-                            
-                            {this.state.canPin ?
-                            <button onClick = {this.pinPost.bind(this)} className = 'button' ><i class="fas fa-map-pin"></i> Pin </button>
-                            : 
-                            <span className = 'color-primary'><i className="fas fa-check-circle"></i> Pinned </span>
-                            }
+                            <Button disabledText = {'Liked'} onClick = {this.likePost.bind(this)} disabled = {!this.state.canLike} loading = {this.state.like_loading}><i class="far fa-thumbs-up"></i> Like </Button>
+                            <Button disabledText = {'Pinned'} onClick = {this.pinPost.bind(this)} disabled = {!this.state.canPin} loading = {this.state.pin_loading}><i class="fas fa-map-pin"></i> Pin </Button>
+                         
                         </div>
                         <h3 class = 'font-normal'>Comments</h3>
                         <form className = 'm-b-1' onSubmit = {this.postComment.bind(this)}>
@@ -190,6 +192,8 @@
         }
     }
     
+    //<---------------------------------------------COMPONENTS--------------------------------------------------------------------->//
+
     const Comment = (props) => {
         return (
             <div className = 'comment'>
@@ -205,6 +209,35 @@
             </div>
         )
     }
+
+    const Button = (props) => { 
+        if (props.loading) {
+            return <button className = 'button m-r-s'><div className = 'loader-button'></div></button>
+        }
+        else if (props.disabled && !props.loading){
+            return <span className = 'color-primary'><i className="fas fa-check-circle"></i> {props.disabledText} </span>
+            // return <button className = 'button m-r-s'><i className="fas fa-check-circle"></i> {props.disabledText}</button>
+        }
+        else {
+            return <button onClick = {() => {props.onClick()}} className = 'button m-r-s'>{props.children}</button>
+        }
+    }
+
+    //Button that shows a loading state, and a completed state.
+
+    // Has three states 
+    //     1. Able to click
+    //     2. Loading 
+    //     3. Already Clicked (disabled)
+
+    // Props
+    //     1. loading | Boolean
+    //     2. disabled | Boolean
+    //     3. innerText | String
+    //     4. disabledText | String
+    //     5. onClick function | Function
+    
+    //<------------------------------------------------------------------------------------------------------------------------------>//
     
     ReactDOM.render(<App></App>, document.getElementById('root'))
     

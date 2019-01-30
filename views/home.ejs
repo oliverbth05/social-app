@@ -1,23 +1,44 @@
 <% include partials/header %>
 
+
+<div class = 'home-nav'>
+    <a class = 'button' href=  '/new'><i class="fas fa-pen"></i> New Post</a>
+    <div>
+    <input class = 'input-small' /> <button class = 'button'><i class="fas fa-search"></i></button>
+    </div>
+</div>
+
+<div class = 'home-nav__spacer'></div>
+
 <div class = 'container'>
-    <a class = 'button m-b-1' href=  '/new'><i class="fas fa-pen"></i> New Post</a>
-    <h3>Your Feed</h3>
-    
-    
+    <h3 class = 'font-normal'>Pinned</h3>
+
     <div class = 'card-container'>
-        <% posts.forEach(post => { %>
-            <div onclick = 'window.location = "/show/<%=post._id%>"' class = 'card'>
-                
-                    <h4 class = 'card__title'><%= post.title %></h4>
-                    <p><%=post.user_name%></p>
-                    <p><%=post.date%></p>
-                    <p><i class = "far fa-eye"></i> <%=post.views%></p>
-                    <p><i class = "far fa-thumbs-up"></i> <%=post.likes.length%></p>
-                
+        <% pins.forEach(pin => { %>
+            <div onclick = 'window.location = "/show/<%=pin.post_id%>"' class = 'card'>
+                        <h4 class = 'card__title'><%= pin.post_title %></h4>
+                        <p><%=pin.pin_date%></p>
             </div>
         <% }) %>
     </div>
+</div>
+
+
+<div class = 'container'>
+        <h3 class = 'font-normal'>Your Feed</h3>
+        <div class = 'card-container'>
+            <% posts.forEach(post => { %>
+                <div onclick = 'window.location = "/show/<%=post._id%>"' class = 'card'>
+                    
+                        <h4 class = 'card__title'><%= post.title %></h4>
+                        <p><%=post.user_name%></p>
+                        <p><%=post.date%></p>
+                        <p><i class = "far fa-eye"></i> <%=post.views%></p>
+                        <p><i class = "far fa-thumbs-up"></i> <%=post.likes.length%></p>
+                    
+                </div>
+            <% }) %>
+        </div>
 </div>
 
 <% include partials/footer %>
