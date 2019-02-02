@@ -17,20 +17,34 @@
 
             <nav class = 'nav'>
                 <div class = 'nav__container'>
-                    <h3 class = 'nav__title'><i class="fas fa-quote-right"></i></h3>
+                    <h3 class = 'nav__title'>S | A</h3>
                     
-                    <a href = '/home' class = 'nav__link'>Home</a>
                     
                     <% if (isAuthenticated) { %>
-                        <a class = 'nav__link' href = '/user/<%=user._id%>'><%= user.first_name %></a>
-                        <a href = '/contacts' class = 'nav__link'>Contacts</a>
-                        <a href = '/messages' class = 'nav__link'>Messages</a>
-                        <a href = '/notifications' class = 'nav__link'>Notifications <%=user.unread_notifications%></a>
-                        <a href = '/logout' class = 'nav__link'>Log Out</a>
+                    <img class = 'nav__avatar' src = 'https://api.adorable.io/avatars/130/<%=user.first_name%> <%=user.last_name%>.png' />
+                    <p class = 'nav__avatar__name'><%=user.first_name%></p>
+                        
+                    <div class = 'nav__links'>
+                        <a href = '/home' class = 'nav__link'><i class="fas fa-home"></i></a>
+                        <a class = 'nav__link' href = '/user/<%=user._id%>'><i class="fas fa-user"></i></a>
+                        <a href = '/contacts' class = 'nav__link'><i class="fas fa-address-book"></i></a>
+                        <a href = '/messages' class = 'nav__link'><i class="fas fa-envelope"></i></a>
+                        <a href = '/notifications' class = 'nav__link'><i class="fas fa-bell"></i> <%=user.unread_notifications%></a>
+                        <a href = '/logout' class = 'nav__link'><i class="fas fa-sign-out-alt"></i></a>
+                    </div>
+                    
+                    
                     <% } else { %>
+                    <div class = 'nav__links'>
                         <a href = '/login' class = 'nav__link'>Login</a>
                         <a href = '/register' class = 'nav__link'>Register</a>
+                    </div>
+                        
                     <% } %>
+                    
+                        
+                        
+                    
                     
                 </div>
             </nav>

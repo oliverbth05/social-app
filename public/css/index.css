@@ -339,27 +339,41 @@ Padding
   width: 8rem;
   background: linear-gradient(to bottom, #14BDEB, #119BC1);
   box-shadow: inset -1px 0px 25px 0px rgba(0, 0, 0, 0.23); }
-  .nav__container {
-    height: 50vh;
+  .nav__title {
+    display: block;
+    color: white;
+    text-align: center;
+    padding-top: 1rem;
+    font-size: 3rem; }
+  .nav__avatar {
+    display: block;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    margin: auto;
+    margin-top: 5rem;
+    box-shadow: 0px 0px 0px 3px #A9E7F7; }
+    .nav__avatar__name {
+      padding-top: .65rem;
+      text-align: center;
+      color: white;
+      font-size: 1.2rem; }
+  .nav__links {
+    margin-top: 5rem;
     display: flex;
     align-items: center;
     justify-content: stretch;
     flex-direction: column; }
-  .nav__title {
-    display: block;
-    color: white;
-    flex-grow: 5;
-    padding-top: 1rem;
-    font-size: 3rem; }
   .nav__link {
     width: 100%;
     transition: all .2s;
     color: white;
     padding: 1rem;
     text-decoration: none;
-    text-align: center; }
+    text-align: center;
+    font-size: 1.15rem;
+    border-bottom: 1px solid #119BC1; }
     .nav__link:hover {
-      padding: 2rem;
       background: #119BC1; }
 
 .home-nav {

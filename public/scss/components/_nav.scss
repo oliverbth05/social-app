@@ -8,20 +8,39 @@
     background: linear-gradient(to bottom, $color5, $color5-dark);
     box-shadow: inset -1px 0px 25px 0px rgba(0,0,0,0.23);
 
-    &__container {
-        height: 50vh;
+  
+
+    &__title {
+        display: block;
+        
+        color: white;
+        text-align: center;
+        padding-top: 1rem;
+        font-size: 3rem;
+    }
+    
+    &__avatar {
+        display: block;
+        height: 4rem;
+        width: 4rem;
+        border-radius: 50%;
+        margin: auto;
+        margin-top: 5rem;
+        box-shadow: $input-shadow-after;
+        &__name {
+            padding-top: .65rem;
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+    }
+    
+    &__links {
+        margin-top: 5rem;
         display: flex;
         align-items: center;
         justify-content: stretch;
         flex-direction: column;
-    }
-
-    &__title {
-        display: block;
-        color: white;
-        flex-grow: 5;
-        padding-top: 1rem;
-        font-size: 3rem;
     }
 
     &__link {
@@ -31,9 +50,9 @@
         padding: 1rem;
         text-decoration: none;
         text-align: center;
-        
+        font-size: 1.15rem;
+        border-bottom: 1px solid $color5-dark;
         &:hover {
-            padding: 2rem;
             background: $color5-dark;
         }
     }
@@ -41,7 +60,6 @@
 
 .home-nav {
     background: $grey-4;
-    width: 
     top: 0;
     left: 0;
     margin-left: 8rem;
